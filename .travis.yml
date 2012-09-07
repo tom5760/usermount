@@ -3,6 +3,7 @@ compiler:
     - gcc
     - clang
 before_install:
+    - sudo add-apt-repository ppa:gnome3-team/gnome3
     - sudo apt-get update -qq
-    - sudo apt-get install -qq libudisks2-dev
+    - sudo apt-get install -qq udisks2
 script: make
