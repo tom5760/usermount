@@ -3,6 +3,7 @@ usermount - Simple C Automounter
 
  * Author: Tom Wambold <tom5760@gmail.com>
  * Copyright (c) 2012 Tom Wambold
+ * [![Build Status](https://secure.travis-ci.org/tom5760/usermount.png?branch=master)](http://travis-ci.org/tom5760/usermount)
 
 Purpose
 -------
