@@ -86,8 +86,6 @@ static void on_interface_added(GDBusObjectManager *manager,
 }
 
 int main(int argc, char **argv) {
-    g_type_init();
-
     GMainLoop *loop = g_main_loop_new(NULL, FALSE);
 
     GError *error = NULL;
