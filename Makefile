@@ -1,4 +1,4 @@
-PKGS=udisks2
+PKGS=udisks2 libnotify
 CFLAGS+=$(shell pkg-config --cflags $(PKGS))
 LDLIBS+=$(shell pkg-config --libs $(PKGS))
 
