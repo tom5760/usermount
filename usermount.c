@@ -70,13 +70,13 @@ static void on_object_added(GDBusObjectManager *manager,
 
     block = udisks_object_peek_block(object);
     if (block == NULL) {
-        printf("Not a block object\n");
+        fprintf(stderr, "Not a block object\n");
         return;
     }
 
     filesystem = udisks_object_peek_filesystem(object);
     if (filesystem == NULL) {
-        printf("Not a mountable filesystem\n");
+        fprintf(stderr, "Not a mountable filesystem\n");
         return;
     }
 
