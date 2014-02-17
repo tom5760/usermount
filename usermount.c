@@ -33,6 +33,7 @@
 static void send_notification(char *path) {
     NotifyNotification *n;
     gchar *message;
+    GError *error = NULL;
 
     notify_init("Basics");
 
@@ -41,8 +42,9 @@ static void send_notification(char *path) {
     n = notify_notification_new("usermount", message, NULL);
     notify_notification_set_timeout (n, 5000); /* 5 seconds */
 
-    if (!notify_notification_show(n, NULL)) {
-      fprintf(stderr, "failed to send notification\n");
+    if (!notify_notification_show(n, &error)) {
+      fprintf(stderr, "Failed to send notification: %s\n", error->message);
+      g_error_free(error);
     }
 
     g_free(message);
