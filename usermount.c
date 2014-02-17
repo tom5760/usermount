@@ -42,7 +42,6 @@ static void send_notification(char *path) {
     notify_notification_set_timeout (n, 5000); /* 5 seconds */
 
     if (!notify_notification_show(n, NULL)) {
-      g_free(message);
       fprintf(stderr, "failed to send notification\n");
     }
 
