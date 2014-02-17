@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012 Tom Wambold <tom5760@gmail.com>
+ * Copyright (c) 2014 Marius L. Jøhndal <mariuslj@ifi.uio.no>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -27,6 +28,27 @@
 
 #define UDISKS_API_IS_SUBJECT_TO_CHANGE
 #include <udisks/udisks.h>
+#include <libnotify/notify.h>
+
+static void send_notification(char *path) {
+    NotifyNotification *n;
+    gchar *message;
+
+    notify_init("Basics");
+
+    message = g_strdup_printf("Device mounted on %s", path);
+
+    n = notify_notification_new("usermount", message, NULL);
+    notify_notification_set_timeout (n, 5000); /* 5 seconds */
+
+    if (!notify_notification_show(n, NULL)) {
+      g_free(message);
+      fprintf(stderr, "failed to send notification\n");
+    }
+
+    g_free(message);
+    g_object_unref(G_OBJECT(n));
+}
 
 static const char *BLOCK_PATH = "/org/freedesktop/UDisks2/block_devices/";
 
@@ -48,13 +70,13 @@ static void on_object_added(GDBusObjectManager *manager,
 
     block = udisks_object_peek_block(object);
     if (block == NULL) {
-        printf("Not a block object\n");
+        fprintf(stderr, "Not a block object\n");
         return;
     }
 
     filesystem = udisks_object_peek_filesystem(object);
     if (filesystem == NULL) {
-        printf("Not a mountable filesystem\n");
+        fprintf(stderr, "Not a mountable filesystem\n");
         return;
     }
 
@@ -73,7 +95,7 @@ static void on_object_added(GDBusObjectManager *manager,
         fprintf(stderr, "Error mounting: %s\n", error->message);
         g_error_free(error);
     } else {
-        fprintf(stderr, "Mounted at %s\n", mount_path);
+        send_notification(mount_path);
         g_free(mount_path);
     }
     g_variant_unref(options);
