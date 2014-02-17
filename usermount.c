@@ -95,6 +95,7 @@ static void on_object_added(GDBusObjectManager *manager,
         fprintf(stderr, "Error mounting: %s\n", error->message);
         g_error_free(error);
     } else {
+        fprintf(stderr, "Mounting device at: %s\n", mount_path);
         send_notification(mount_path);
         g_free(mount_path);
     }
