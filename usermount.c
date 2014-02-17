@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Tom Wambold <tom5760@gmail.com>
+ * Copyright (c) 2014 Tom Wambold <tom5760@gmail.com>
  * Copyright (c) 2014 Marius L. Jøhndal <mariuslj@ifi.uio.no>
  *
  * Permission is hereby granted, free of charge, to any person
