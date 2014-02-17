@@ -30,17 +30,21 @@
 #include <udisks/udisks.h>
 #include <libnotify/notify.h>
 
+static const char *BLOCK_PATH = "/org/freedesktop/UDisks2/block_devices/";
+static const int NOTIFICATION_TIMEOUT_MS = 5000; /* 5 seconds */
+static const char *NOTIFICATION_APP_NAME = "usermount";
+
 static void send_notification(char *path) {
     NotifyNotification *n;
     gchar *message;
     GError *error = NULL;
 
-    notify_init("Basics");
+    notify_init(NOTIFICATION_APP_NAME);
 
     message = g_strdup_printf("Device mounted on %s", path);
 
-    n = notify_notification_new("usermount", message, NULL);
-    notify_notification_set_timeout (n, 5000); /* 5 seconds */
+    n = notify_notification_new(NOTIFICATION_APP_NAME, message, NULL);
+    notify_notification_set_timeout(n, NOTIFICATION_TIMEOUT_MS);
 
     if (!notify_notification_show(n, &error)) {
       fprintf(stderr, "Failed to send notification: %s\n", error->message);
@@ -50,8 +54,6 @@ static void send_notification(char *path) {
     g_free(message);
     g_object_unref(G_OBJECT(n));
 }
-
-static const char *BLOCK_PATH = "/org/freedesktop/UDisks2/block_devices/";
 
 static void on_object_added(GDBusObjectManager *manager,
                             GDBusObject *dbus_object, gpointer user_data) {
