@@ -14,14 +14,21 @@ automount removable devices as a normal user.
 Dependencies
 ------------
 
- * udisks2 - Tested with version 1.94.0
+ * udisks2 - Tested with version 2.1.2
     * http://www.freedesktop.org/wiki/Software/udisks
     * Arch Linux Package: udisks2
+
+ * (OPTIONAL) libnotify - Tested with version 0.7.6
+    * http://library.gnome.org/devel/notification-spec/
+    * Arch Linux Package: libnotify
 
 Compiling
 ---------
 
 Just type `make`.
+
+If you wish to disable notifications, edit the Makefile to comment the marked
+lines.
 
 Running
 -------
