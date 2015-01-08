@@ -29,13 +29,13 @@
 #define UDISKS_API_IS_SUBJECT_TO_CHANGE
 #include <udisks/udisks.h>
 
-#ifdef ENABLE_NOTIFICATIONS
+#ifdef HAVE_LIBNOTIFY
 #include <libnotify/notify.h>
 #endif
 
 static const char *BLOCK_PATH = "/org/freedesktop/UDisks2/block_devices/";
 
-#ifdef ENABLE_NOTIFICATIONS
+#ifdef HAVE_LIBNOTIFY
 static const int NOTIFICATION_TIMEOUT_MS = 5000; /* 5 seconds */
 static const char *NOTIFICATION_APP_NAME = "usermount";
 
@@ -106,7 +106,7 @@ static void on_object_added(GDBusObjectManager *manager,
     } else {
         fprintf(stderr, "Mounting device at: %s\n", mount_path);
 
-#ifdef ENABLE_NOTIFICATIONS
+#ifdef HAVE_LIBNOTIFY
         send_notification(mount_path);
 #endif
 
