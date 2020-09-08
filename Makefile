@@ -1,18 +1,14 @@
-# Comment out these two lines (and uncomment the line marked below) to disable
-# notifications
-PKGS=udisks2 libnotify
-CPPFLAGS=-DHAVE_LIBNOTIFY
+ENABLE_LIBNOTIFY ?= 1
+DEPENDENCIES = udisks2
+CFLAGS += -Wall -Wextra -Werror -Wno-unused-parameter -O3
 
-# Uncomment this line to build without notification support
-#PKGS=udisks2
+ifeq ($(ENABLE_LIBNOTIFY), 1)
+    DEPENDENCIES += libnotify
+    CFLAGS += -DHAVE_LIBNOTIFY
+endif
 
-CFLAGS+=$(shell pkg-config --cflags $(PKGS))
-LDLIBS+=$(shell pkg-config --libs $(PKGS))
-
-CFLAGS += -Wall -Wextra -Werror -Wno-unused-parameter
-
-#CFLAGS += -O0 -g
-CFLAGS += -O3
+CFLAGS += $(shell pkg-config --cflags $(DEPENDENCIES))
+LDLIBS += $(shell pkg-config --libs $(DEPENDENCIES))
 
 .PHONY: all clean distclean
 
